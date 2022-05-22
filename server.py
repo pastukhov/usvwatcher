@@ -81,27 +81,27 @@ def runServer(mon,port, filesList,addr="localhost"):
     thread.start()
 
 if __name__ == '__main__':
-    port=8082
-    address="localhost"
-    shutdownLevel=None
-    filesList={}
-    try:
-        optlist,args=getopt.getopt(sys.argv[1:],'p:a:s:f:')
-    except getopt.GetoptError as err:
-        print(err)
-        sys.exit(1)   
-    for o,a in optlist:
-        if o == '-p':
-            port=int(a)
-        elif o == '-a':
-            address=a
-        elif o == '-s':
-            shutdownLevel=int(a)
-        elif o == '-f':
-            nv=a.split(":")
-            if len(nv) != 2:
-                raise Exception("-f name:file, invalid format %s"%a)
-            filesList[nv[0]]=nv[1]        
+    port=os.getenv("PORT",default=8082)
+    address=os.getenv("ADDRESS",default="localhost")
+    shutdownLevel=os.getenv("SHUTDOWN_LEVEL",default="None")
+    filesList=os.getenv("FILES_LIST",default={})
+    # try:
+    #     optlist,args=getopt.getopt(sys.argv[1:],'p:a:s:f:')
+    # except getopt.GetoptError as err:
+    #     print(err)
+    #     sys.exit(1)   
+    # for o,a in optlist:
+    #     if o == '-p':
+    #         port=int(a)
+    #     elif o == '-a':
+    #         address=a
+    #     elif o == '-s':
+    #         shutdownLevel=int(a)
+    #     elif o == '-f':
+    #         nv=a.split(":")
+    #         if len(nv) != 2:
+    #             raise Exception("-f name:file, invalid format %s"%a)
+    #         filesList[nv[0]]=nv[1]        
     print("running with port %s, address %s shutdown %s"%(port,address,shutdownLevel))            
     mon=monitor.Monitor()
     mon.startQuery()        
