@@ -103,7 +103,7 @@ if __name__ == '__main__':
                 numLow +=1
                 if numLow > 5:
                     print("USV shutdown level reached, shutdown system")
-                    subprocess.run("sudo -n halt",shell=True)
+                    subprocess.run("shutdown -P now",shell=True)
                     numLow=0
             else:
                 numLow=0
