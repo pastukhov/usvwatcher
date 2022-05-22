@@ -66,15 +66,15 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                             nv=line.rstrip().split("=")
                             if len(nv) != 2:
                                 continue
-                            rt[nv[0]]=nv[1]    
+                            rt[nv[0]]=nv[1]
                     self.sendJsonResponse(rt)
                 else:
                     self.sendJsonResponse(self.getReturnData("file not found %s"%f))
-                return                              
+                return
         self.sendJsonResponse(self.getReturnData("unknown request %s"%self.path))  
 
     def log_message(self,*args):
-        pass    
+        pass
 
 
 def runServer(mon,port, filesList,addr="localhost"):
@@ -87,26 +87,9 @@ if __name__ == '__main__':
     address=os.getenv("ADDRESS",default="0.0.0.0")
     shutdownLevel=float(os.getenv("SHUTDOWN_LEVEL",default=0))
     filesList=os.getenv("FILES_LIST",default={})
-    # try:
-    #     optlist,args=getopt.getopt(sys.argv[1:],'p:a:s:f:')
-    # except getopt.GetoptError as err:
-    #     print(err)
-    #     sys.exit(1)   
-    # for o,a in optlist:
-    #     if o == '-p':
-    #         port=int(a)
-    #     elif o == '-a':
-    #         address=a
-    #     elif o == '-s':
-    #         shutdownLevel=int(a)
-    #     elif o == '-f':
-    #         nv=a.split(":")
-    #         if len(nv) != 2:
-    #             raise Exception("-f name:file, invalid format %s"%a)
-    #         filesList[nv[0]]=nv[1]        
-    print("running with port %s, address %s shutdown %s"%(port,address,shutdownLevel))            
+    print("running with port %s, address %s shutdown %s"%(port,address,shutdownLevel))
     mon=monitor.Monitor()
-    mon.startQuery()        
+    mon.startQuery()
     runServer(mon,port,filesList,address)
     numLow=0
     while True:
