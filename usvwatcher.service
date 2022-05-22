@@ -11,14 +11,13 @@ ExecStartPre=-/bin/sleep 30
 ExecStartPre=-/usr/bin/docker stop %n
 ExecStartPre=-/usr/bin/docker rm %n
 #ExecStartPre=/usr/bin/docker pull pastukhov/usvwatcher
-ExecStart=/usr/bin/docker run --rm --name %n \
+ExecStart=/usr/bin/docker run \
+    --rm \
     --net host \
     --volume /etc/localtime:/etc/localtime:ro \
     --volume /var/run:/var/run \
     --name %n \
-    --rm \
     --read-only \
-    --env TZ="Europe/Moscow" \
     --privileged \
     pastukhov/usvwatcher
 
