@@ -81,9 +81,9 @@ def runServer(mon,port, filesList,addr="localhost"):
     thread.start()
 
 if __name__ == '__main__':
-    port=os.getenv("PORT",default=8082)
-    address=os.getenv("ADDRESS",default="localhost")
-    shutdownLevel=os.getenv("SHUTDOWN_LEVEL",default="None")
+    port=int(os.getenv("PORT",default=8082))
+    address=os.getenv("ADDRESS",default="0.0.0.0")
+    shutdownLevel=float(os.getenv("SHUTDOWN_LEVEL",default=0))
     filesList=os.getenv("FILES_LIST",default={})
     # try:
     #     optlist,args=getopt.getopt(sys.argv[1:],'p:a:s:f:')
@@ -113,7 +113,7 @@ if __name__ == '__main__':
         if current.timestamp  < (now -120):
             print("Status not updated")
             sys.exit(1)
-        if shutdownLevel is not None:
+        if shutdownLevel is not 0:
             if current.discharging and current.percent < shutdownLevel:
                 numLow +=1
                 if numLow > 5:
