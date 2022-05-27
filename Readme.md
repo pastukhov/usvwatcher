@@ -1,6 +1,8 @@
 Simple Monitor for waveshare ups hat
 ====================================
 
+## This fork is adopted to run as a docker container
+
 A service that will check the status of an [waveshare ups hat](https://www.waveshare.com/wiki/UPS_HAT) and provide this at a rest API.
 It is using the [waveshare example code](https://www.waveshare.com/w/upload/d/d9/UPS_HAT.7z).
 
