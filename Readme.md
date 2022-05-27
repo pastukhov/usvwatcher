@@ -13,7 +13,7 @@ sudo systemctl enable --now usvwatcher
 ```
 Afterwards you can access the json api
 ```
-    curl localhost:8082 | json_pp
+    curl localhost:8082/usv | json_pp
 ```
 You will get an output like:
 ```
