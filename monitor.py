@@ -14,7 +14,7 @@ class Values(object):
         self.current=0
         self.power=0
         self.percent=0
-        self.discharging=False
+        self.charging=True
         self.status=self.STATUS_UNDEFINED
         self.timestamp=time.time()
         self.dischargeStart=0
@@ -36,10 +36,10 @@ class Values(object):
         rt+="Current:       {:9.6f} A\n".format(self.current)
         rt+="Power:         {:6.3f} W\n".format(self.power)
         rt+="Percent:       {:3.1f}%\n".format(self.percent)
-        rt+="Discharging:   {0}\n".format(self.discharging)
+        rt+="Charging:   {0}\n".format(self.charging)
         rt+="Status:        {:s}\n".format(self.status)
         rt+="Time:          {:s}\n".format(time.strftime("%Y/%m/%d %H:%M:%S",time.localtime(self.timestamp)))
-        if self.dischargeStart > 0 and self.discharging :
+        if self.dischargeStart > 0 and not self.charging :
             rt+="DisSince:      {:s}\n".format(time.strftime("%Y/%m/%d %H:%M:%S",time.localtime(self.dischargeStart)))
         return rt
 
@@ -67,7 +67,7 @@ class Monitor(object):
         if(p < 0):
             p = 0
         rt.percent=p
-        rt.discharging=True if rt.current < self.DISCHARGE_A else False
+        rt.charging=True if rt.current > self.DISCHARGE_A else False
         rt.status=rt.STATUS_OK
         return rt
 
@@ -77,7 +77,7 @@ class Monitor(object):
         while (runCount == self.runCount):
             newValues=self.queryUsv()
             if newValues.status == Values.STATUS_OK:
-                if newValues.discharging:
+                if not newValues.charging:
                     if dischargeStart is None:
                         dischargeStart=time.time()
                     newValues.dischargeStart=dischargeStart

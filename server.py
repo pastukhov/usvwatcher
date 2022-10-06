@@ -99,7 +99,7 @@ if __name__ == '__main__':
             print("Status not updated")
             sys.exit(1)
         if shutdownLevel != 0:
-            if current.discharging and current.percent < shutdownLevel:
+            if not current.charging and current.percent < shutdownLevel:
                 numLow +=1
                 if numLow > 5:
                     print("USV shutdown level reached, shutdown system")
